@@ -1,0 +1,35 @@
+.circle{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: green;
+    background-image: url("p1.jpeg");
+    background-size: cover;
+    mix-blend-mode: multiply;
+  }
+  
+  .bg-up{
+  background-image: url("38273612.jpg");   
+  background-size: cover;
+  height: 700px;
+  }
+  .square{
+    mix-blend-mode: multiply;
+    height: 100px;
+    width: 100px;
+    position: relative;
+  background-image: url("images.png");
+  background-size: cover;
+    border-radius: 50%;
+    background-color: rgb(14, 41, 218);
+  }
+  .bullet{
+    mix-blend-mode: multiply;
+    height: 50px;
+    width: 50px;
+    position: relative;
+  background-image: url("images.jpeg");
+  background-size: cover;
+    border-radius: 50%;
+    background-color: rgb(14, 41, 218);
+  }
