@@ -13,6 +13,11 @@
   background-size: cover;
   height: 700px;
   }
+  .gameover{
+    height: 500;
+    width: 100%;
+    background-color: aqua;
+  }
   .square{
     mix-blend-mode: multiply;
     height: 100px;

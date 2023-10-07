@@ -1,22 +1,32 @@
 import { useEffect,useState,useRef } from "react"
 import "./styles.css";
 import photo from './images.jpeg'
+import smoke from './smoke.jpeg';
+import Gameover from "./Gameover";
 export default function Game(){
     const p1ref=useRef()
     const p2ref=useRef()
     const fire=useRef()
+    const main=useRef();
    // let ref2;
-   let mo=1;
+   let mo=0;
+   let timer;
   // const[]
   // const url="http://localhost:3000/api/pokimonall"
     const url="http://localhost:3000/api/pokimon/4/info"
     const url2="http://localhost:3000/api/pokimon/5/info"
     const[p1,setP1]=useState([])
     const[p2,setp2]=useState([])
-    const[imgs,setimgs]=useState([])
+    const [intervalId, setIntervalId] = useState(null);
+    const[livep2,setlivep2]=useState([])
+    //const[interveld,setinterveld]=useState([])
+    //setinterveld=true;
+    const[bote_dance,setBote_dance]=useState(1)
     const[time,setTime]=useState()
     const[ref2,setref2]=useState()
     const[x,setx]=useState([])
+    let blood;
+    let c=1;
     const fetchinfo=()=>{
         return fetch(url).then((res)=>res.json()).then((d)=>setP1(d))
 
@@ -29,14 +39,87 @@ export default function Game(){
     useEffect(()=>{
        // const image = new Image();
        // changeImageSrc()
-        boot()
+       // boot()
         setx(p2ref.current.style.left)
         fetchinfo2()
         fetchinfo();
         gamestart()
+        setBote_dance(1)
+        const id = setInterval(() => {
+            blood=p2.Defense 
+            let ran=Math.floor(Math.random()*100)
+            let ran1=Math.floor(Math.random()*100)
+            if(parseInt(p1ref.current.style.left)>parseInt(p2ref.current.style.left)-5 &parseInt(p1ref.current.style.left)<parseInt(p2ref.current.style.left)+5|parseInt(p1ref.current.style.left)===parseInt(p2ref.current.style.left+2)&(parseInt(p1ref.current.style.top)>parseInt(p2ref.current.style.top)-5&parseInt(p1ref.current.style.top)<parseInt(p2ref.current.style.top)+5|parseInt(p1ref.current.style.top)===parseInt(p2ref.current.style.top))){
+                setlivep2(blood)
+                blood=blood+p2.Defense 
+                stopInterval()
+                setBote_dance(0);
+              //  console.log("not hit but noooot interveld",bote_dance);
+                if(blood>100){
+                    stopInterval()
+                    stopInterval
+                  //  clearInterval(p);
+               p2ref.current.style.backgroundImage=`url(${smoke})`
+              
+               console.log("now kaboom and value of      boot+dance",bote_dance);
+             //  main.current.tabIndex=-1
+                    
+              // setinterveld=false;
+             // return   clearInterval(p);
+               //setBote_dance(0);
+              //clearInterval(bote_dance);
+               console.log("after the crash",bote_dance);
+            }
+    
+            }
+            else{
+                console.log("value of p2ref is",parseInt(p2ref.current.style.top))
+                console.log("value of p2ref is",parseInt(p1ref.current.style.top))
+               // console.log("not kaboom and random number is ",ran)
+            }
+            
+            if( (parseInt(p2ref.current.style.left)&(parseInt(p2ref.current.style.top)))>500){
+           //    console.log("now is not biiger")
+                p2ref.current.style.left='400px';
+                p2ref.current.style.top='200px';
+                setref2(parseInt(p2ref.current.style.left));
+            }
+            else if( (parseInt(p2ref.current.style.left))>300){
+             //   console.log("now is not super biiger")
+                p2ref.current.style.left=parseInt(p2ref.current.style.left)-ran1-p2.Speed+'px'
+                 p2ref.current.style.top='200px';
+                 setref2(parseInt(p2ref.current.style.left));
+             }
+    
+    
+    
+                else  {
+                    p2ref.current.style.top=parseInt(p2ref.current.style.top)+ran+'px'
+                    p2ref.current.style.left=parseInt(p2ref.current.style.left)+ran1+p2.Speed+'px'
+                 //   p2ref.current.style.left=parseInt(p2ref.current.style.left)-ran1-p2.Speed+'px'
+                
+                }
+        
+                if (bote_dance===0) {
+                  //  clearInterval(p);
+                   console.log("this messge is broadcast from if",bote_dance)
+                }
+        
+            console.log('Interval is running...');
+          }, 1000);
+          setIntervalId(id);
+        //   return () => {
+        //     clearInterval(id);
+         // };
+      //  boot();
        // inputref.current.style.left="90px";
       //  inputref.current.style.position='absolute';
     },[])
+    const stopInterval = () => {
+        // Clear the interval using the stored interval ID
+        clearInterval(intervalId);
+        setIntervalId(null); // Reset the interval ID in state
+      };
     const changeImageSrc = () => {
         setImageSrc('images.jpeg');
       }
@@ -44,11 +127,32 @@ export default function Game(){
     //console.log(typeof(data));
    // const interveld;
     
+   let p
+   // bote_dance=true;
+        console.log ("value of boot",bote_dance)
+        p = setInterval(boot,4000);
+   
+    // else{
+       
+    //  clearInterval(p);
+    //  p=null
+    //      console.log("this messge is broadcast from else and valsue of bote_dance ",bote_dance)
+
+    //  }  
+
+
+
+
+
     return(
         <>
-      <div className="bg-up"  onKeyDown={(e) =>movie(e)} tabIndex="0" >
-    
-      
+      <div className="bg-up" ref={main} onKeyDown={(e) =>movie(e)} tabIndex="0" >
+        <label>
+      P1:<progress value={livep2} max="150">70 %</progress>
+      </label>
+      <label >
+      P2:<progress value={livep2} max="150">70 %</progress>
+      </label>
         <div className="circle" ref={p1ref}style={{position:'absolute',left:'200px',top:"00px"}}>
       
         <div className="bullet" ref={fire} style={{ position:'relative',left:'40px',top:"0px"}}></div>
@@ -79,94 +183,75 @@ export default function Game(){
      </div>
    
        </>)
-        function boot(){
-           // p2ref.current.style.left=parseInt(p2ref.current.style.left)+mo+p2.Speed+'px';
+        // function boot(){
+        //    // p2ref.current.style.left=parseInt(p2ref.current.style.left)+mo+p2.Speed+'px';
         
-            console.log(p2ref.current) 
+        //     console.log(p2ref.current) 
         
-          }
+        //   }
     
 
-
+       
     function movie(e){
+       let c=0;
+     
+       
+
+
+
+
+
+      //  function boot(){as};
+     //  let setinterveld=true;
+        
+
+
      //   console.log('this key is pressed',e)
         if(e.key==='d'){
            // setimgs("./images.jpeg")
             
        //     console.log("this is the value of image i think",imgs)
-                     p1ref.current.style.left=parseInt(p1ref.current.style.left)+mo+p1.Speed+'px';
+                     p1ref.current.style.left=parseInt(p1ref.current.style.left)+mo+p2.Speed+'px';
             
-            fire.current.src={photo}
+         //   fire.current.src={photo}
             
            // console.log('this is fire ref',fire.current) 
           //  inputref.current.style.left=80;
           //  setx({x}+1)
-          mo=+1
+        //  mo=+1
           // image.src="./Images.jepg"
          
        
         }
         else if(e.key==='a'){
           //  inputref.current.style.left="500px";
-          p1ref.current.style.left=parseInt(p1ref.current.style.left)-mo-p1.Speed+'px';
+          p1ref.current.style.left=parseInt(p1ref.current.style.left)-mo-p2.Speed+'px';
     
         }
         else if(e.key==='s'){
             //  inputref.current.style.left="500px";
-            p1ref.current.style.top=parseInt(p1ref.current.style.top)+mo+p1.Speed+'px';
+            p1ref.current.style.top=parseInt(p1ref.current.style.top)+mo+p2.Speed+'px';
       
           }
           else if(e.key==='w'){
             //  inputref.current.style.left="500px";
-            p1ref.current.style.top=parseInt(p1ref.current.style.top)-mo-p1.Speed+'px';
+            p1ref.current.style.top=parseInt(p1ref.current.style.top)-mo-p2.Speed+'px';
           
       
           }
+         
           else if(e.key==='p'){
             //  inputref.current.style.left="500px";
+          
+           //  else{
+           //    clearInterval(bote_dance);
+          //     bote_dance=null;
+          //   }
+            
+            
+          //  console.log("the d is pressed")
            
-            function boot(){
-                let ran=Math.floor(Math.random()*100)
-                let ran1=Math.floor(Math.random()*100)
-                if(parseInt(p2ref.current.style.left)===parseInt(p1ref.current.style.left)){
-                    console.log("now kaboom");
-                   
-
-                }
-                else{
-                    console.log("value of p2ref is",parseInt(p2ref.current.style.top))
-                    console.log("value of p2ref is",parseInt(p1ref.current.style.top))
-                    console.log("not kaboom and random number is ",ran)}
-                
-                if( (parseInt(p2ref.current.style.left)&(parseInt(p2ref.current.style.top)))>500){
-                   console.log("now is not biiger")
-                    p2ref.current.style.left='400px';
-                    p2ref.current.style.top='200px';
-                    setref2(parseInt(p2ref.current.style.left));
-                }
-                else if( (parseInt(p2ref.current.style.left))>300){
-                    console.log("now is not super biiger")
-                    p2ref.current.style.left=parseInt(p2ref.current.style.left)-ran1-p2.Speed+'px'
-                     p2ref.current.style.top='200px';
-                     setref2(parseInt(p2ref.current.style.left));
-                 }
-
-
-
-                    else  {
-                        p2ref.current.style.top=parseInt(p2ref.current.style.top)+ran+'px'
-                        p2ref.current.style.left=parseInt(p2ref.current.style.left)+ran1+p2.Speed+'px'
-                     //   p2ref.current.style.left=parseInt(p2ref.current.style.left)-ran1-p2.Speed+'px'
-                    
-                    }
-            
-                 
-            
-              }
-            
-            console.log("the d is pressed")
            
-            const interveld=setInterval(boot,1000);
 
       
           }
@@ -187,7 +272,7 @@ export default function Game(){
                    // setref2(parseInt(fire.current.style.left));
                 }
                     else { 
-                        console.log("p2.Speed",p2.Speed)
+                    //    console.log("p2.Speed",p2.Speed)
                        // fire.current.style.left='0px';
                        // setx(p1.Speed)
                         fire.current.style.left=parseInt(fire.current.style.left)+p2.Speed+'px'}
@@ -202,6 +287,15 @@ export default function Game(){
           }
           
     }
+
+
+    function boot(){
+
+      
+      }
+
+    
+
     
 }
 function gamestart(){
@@ -220,5 +314,9 @@ function gamestart(){
     return(
         <h1>this isth</h1>
     )
-  }
+    }
+   
+
+
+  
   

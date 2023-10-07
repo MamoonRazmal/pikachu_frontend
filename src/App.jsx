@@ -1,11 +1,11 @@
 
 import {Routes,Route} from "react-router-dom"
-import Game from "./components/Game"
+import Games from "./components/Games"
 export default function App(){
   return(
     <>
     <Routes>
-    <Route path="/game" element= {<Game/>} />
+    <Route path="/games" element= {<Games/>} />
 
     </Routes>
       <h1>this is the file</h1>
